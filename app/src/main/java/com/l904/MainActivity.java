@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.l904.database.DbController;
 import com.l904.database.ParamsUtil;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout Drawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
+    private TextView expense,todo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,24 @@ public class MainActivity extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
                 // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
                 // open I am not going to put anything here)
+                expense = (TextView)drawerView.findViewById(R.id.expense);
+                todo = (TextView)drawerView.findViewById(R.id.todo);
+                expense.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Drawer.closeDrawers();
+                        Toast.makeText(getApplicationContext(), "expense", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                todo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Drawer.closeDrawers();
+                        Toast.makeText(getApplicationContext(), "todo", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             }
 
             @Override
@@ -84,4 +105,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
