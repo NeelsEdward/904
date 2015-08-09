@@ -4,4 +4,7 @@
 
     <string name="hello_js">Hello job seekers!</string>
     <string name="action_settings">Settings</string>
+    <string name="openDrawer">Open Drawer</string>
+    <string name="closeDrawer">Close Drawer</string>
+
 </resources>
