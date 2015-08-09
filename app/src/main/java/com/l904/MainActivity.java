@@ -5,12 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.l904.database.DbController;
+
 public class MainActivity extends AppCompatActivity {
 
+    private DbController dbController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dbController = DbController.getInstace();
+        dbController.openDb(this);
+        dbController.insertExpense("Neels Exp", "100Rs");
+        dbController.insertTodo("Shopping", "Market");
+        dbController.insertTodo("Shopping","Market");
+        dbController.insertItem("sugar","milk",1);
+        Utils.copyDBToExternal(this);
+
     }
 
     @Override
