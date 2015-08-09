@@ -18,7 +18,7 @@ public class Utils {
         String from = "/data/data/com.l904/databases/todoList.db";
         try {
             FileInputStream fis=new FileInputStream(new File(from));
-            FileOutputStream fos=new FileOutputStream(ctx.getExternalFilesDir(null));
+            FileOutputStream fos=new FileOutputStream("/sdcard/todo.db");
             Log.d(TAG," "+ctx.getExternalFilesDir(null));
             byte [] buffer = new byte[1024];
             while(fis.read(buffer)>0){
