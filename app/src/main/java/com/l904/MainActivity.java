@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.l904.database.DbController;
+import com.l904.database.ParamsUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         else if(id==R.id.action_new){
             //starting NewItemActivty
             Intent i = new Intent(this, NewItemActivity.class);
-            i.putExtra("type", 1);
+            i.putExtra(ParamsUtil.TYPE, ParamsUtil.TYPE_EXPENSE);
             startActivity(i);
             return true;
         }

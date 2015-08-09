@@ -95,7 +95,7 @@ public class DbController {
 
     public List<ParamsUtil>  getAllTodoExpense(int id){
         String str =MysqlLiteHelper.TABLE_NAME_TODO;
-        if(id == 3){
+        if(id == ParamsUtil.TYPE_EXPENSE){
             str =MysqlLiteHelper.TABLE_NAME_EXPENSE;
         }
 

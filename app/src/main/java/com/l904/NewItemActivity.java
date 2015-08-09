@@ -5,8 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-public class NewItemActivity extends AppCompatActivity {
+import com.l904.database.DbController;
+import com.l904.database.ParamsUtil;
+
+public class NewItemActivity extends AppCompatActivity implements NewItemActivityFragment.OnInteractionListener {
     int type;
     public static final String TAG="NewItemActivity";
 
@@ -14,9 +18,15 @@ public class NewItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        type=getIntent().getIntExtra(ParamsUtil.TYPE,0);
+        if(type==0) {
+            Log.e(TAG,"this activity needs int extra with name ParamsUtil.TYPE, with value >0");
+            finish();
+        }
         Log.e(TAG, getIntent().getIntExtra("type", 0) + "");
         setContentView(R.layout.activity_new_item);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //TODO fix this. currently its throwing error
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -41,4 +51,9 @@ public class NewItemActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public int getType() {
+        return type;
+    }
+
 }

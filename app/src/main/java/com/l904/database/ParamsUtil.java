@@ -4,6 +4,15 @@ package com.l904.database;
  * Created by Dell Laptop on 8/9/2015.
  */
 public class ParamsUtil {
+
+    public static final  String TYPE= "type";
+    public static final int TYPE_EXPENSE=1;
+    public static final int TYPE_COUNTER=2;
+    public static final int TYPE_TODO=3;
+    public static final int TYPE_TODOITEM=4;
+
+
+
     String name_date_des,color_amount_target;
     int id;
 
