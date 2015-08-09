@@ -27,6 +27,7 @@ public class NewItemActivity extends AppCompatActivity implements NewItemActivit
         setContentView(R.layout.activity_new_item);
         //TODO fix this. currently its throwing error
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
 

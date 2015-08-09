@@ -33,11 +33,14 @@ public class NewItemActivityFragment extends Fragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        setRetainInstance(true);
         View v = inflater.inflate(R.layout.fragment_new_item, container, false);
         nameEditText = (EditText) v.findViewById(R.id.editText);
         numEditText = (EditText) v.findViewById(R.id.editText2);
         v.findViewById(R.id.button).setOnClickListener(this);
-        setRetainInstance(true);
+        radioGroup= (RadioGroup) v.findViewById(R.id.radioGrp);
+        if(type!=ParamsUtil.TYPE_TODO) radioGroup.setVisibility(View.INVISIBLE);
+
         return v;
     }
 
@@ -45,6 +48,7 @@ public class NewItemActivityFragment extends Fragment implements View.OnClickLis
     public void onClick(View v) {
         String name = nameEditText.getText().toString();
         nameEditText.setText("");
+        if(name.equals("")) return;
 
         String numS = numEditText.getText().toString();
         Integer num = numS.equals("")?0:Integer.parseInt(numS);
@@ -57,6 +61,7 @@ public class NewItemActivityFragment extends Fragment implements View.OnClickLis
             case ParamsUtil.TYPE_EXPENSE:
                 dbController.insertExpense(name,numS);
                 Toast.makeText(getActivity(), "Inserted. Total rows=" + dbController.getAllTodoExpense(ParamsUtil.TYPE_EXPENSE).size(), Toast.LENGTH_SHORT).show();
+                getActivity().finish();
         }
     }
 
