@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pink">#c2185b</color>
+    <color name="pink_light">#e91e63</color>
+    <color name="purple">#7b1fa2</color>
+    <color name="purple_light">#9c27b0</color>
+    <color name="indigo">#303f9f</color>
+    <color name="indigo_light">#3f51b5</color>
+    <color name="blue">#1976d2</color>
+    <color name="blue_light">#2196f3</color>
+    <color name="teal">#00796b</color>
+    <color name="teal_light">#009688</color>
+    <color name="greenl">#689f38</color>
+    <color name="greenl_light">#8bc34a</color>
+    <color name="amber">#ffa000</color>
+    <color name="amber_light">#ffc107</color>
+    <color name="orangedeep">#e64a19</color>
+    <color name="orangedeep_light">#ff5722</color>
+    <color name="greyb">#455a64</color>
+    <color name="greyb_light">#607d8b</color>
+
+</resources>
