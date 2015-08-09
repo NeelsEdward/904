@@ -2,6 +2,7 @@ package com.l904;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -70,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if(id==R.id.action_new){
+            //starting NewItemActivty
+            Intent i = new Intent(this, NewItemActivity.class);
+            i.putExtra("type", 1);
+            startActivity(i);
             return true;
         }
 
