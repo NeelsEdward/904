@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@color/">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/expense_value"
+        android:layout_alignParentRight="true"
+        android:text="25"
+        android:textSize="30sp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/bright_foreground_material_light"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expense_name"
+        android:layout_alignParentLeft="true"
+        android:text="Samosa"
+        android:textSize="30sp"
+        android:layout_toLeftOf="@+id/expense_value"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="30dp"
+        android:textColor="@color/bright_foreground_material_light"
+        />
+</RelativeLayout>
