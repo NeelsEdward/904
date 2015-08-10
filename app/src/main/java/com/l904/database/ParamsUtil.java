@@ -1,8 +1,6 @@
 package com.l904.database;
 
-/**
- * Created by Dell Laptop on 8/9/2015.
- */
+
 public class ParamsUtil {
 
     public static final  String TYPE= "type";
@@ -15,6 +13,8 @@ public class ParamsUtil {
 
     String name_date_des,color_amount_target;
     int id;
+    private String expOrCounter;
+
 
     public int getId() {
         return id;
@@ -44,5 +44,13 @@ public class ParamsUtil {
 
     public void setColor_amount_target(String color_amount_target) {
         this.color_amount_target = color_amount_target;
+    }
+
+    public String getExpOrCounter() {
+        return expOrCounter;
+    }
+
+    public void setExpOrCounter(String expOrCounter) {
+        this.expOrCounter = expOrCounter;
     }
 }

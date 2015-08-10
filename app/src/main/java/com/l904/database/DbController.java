@@ -41,11 +41,12 @@ public class DbController {
         cv.put(MysqlLiteHelper.COLUMN_NAME_TODO_COLOR,str2);
         db.insert(MysqlLiteHelper.TABLE_NAME_TODO,null,cv);
     }
-    public void insertExpense(String str1 , String str2){
+    public void insertExpense(String str1 , String str2,String expOrCounter){//todo
         db = myDbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(MysqlLiteHelper.COLUMN_NAME_EXPENSE_DATE,str1);
         cv.put(MysqlLiteHelper.COLUMN_NAME_EXPENSE_AMOUNT,str2);
+        cv.put(MysqlLiteHelper.COLUMN_NAME_EXPENSE_OR_COUNTER,expOrCounter);
         db.insert(MysqlLiteHelper.TABLE_NAME_EXPENSE,null,cv);
     }
     public void insertItem(String str1 , String str2,int todoId){
@@ -78,11 +79,12 @@ public class DbController {
         cv.put(MysqlLiteHelper.COLUMN_NAME_TODO_COLOR, str2);
         db.update(MysqlLiteHelper.TABLE_NAME_TODO,cv,MysqlLiteHelper.COLUMN_NAME_TODO_ID+" = "+id,null);
     }
-    public void editExpense(String str1 , String str2,int id){
+    public void editExpense(String str1 , String str2,String expOrCounter,int id){//TODO
         db = myDbHelper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(MysqlLiteHelper.COLUMN_NAME_EXPENSE_DATE,str1);
         cv.put(MysqlLiteHelper.COLUMN_NAME_EXPENSE_AMOUNT, str2);
+        cv.put(MysqlLiteHelper.COLUMN_NAME_EXPENSE_OR_COUNTER, expOrCounter);
         db.update(MysqlLiteHelper.TABLE_NAME_EXPENSE, cv, MysqlLiteHelper.COLUMN_NAME_EXPENSE_ID+ " = " + id, null);
     }
     public void editItem(String str1 , String str2,int id){
@@ -95,8 +97,8 @@ public class DbController {
 
     public List<ParamsUtil>  getAllTodoExpense(int id){
         String str =MysqlLiteHelper.TABLE_NAME_TODO;
-        if(id == ParamsUtil.TYPE_EXPENSE){
-            str =MysqlLiteHelper.TABLE_NAME_EXPENSE;
+        if(id == ParamsUtil.TYPE_EXPENSE || id == ParamsUtil.TYPE_COUNTER){//TODO
+            str = MysqlLiteHelper.TABLE_NAME_EXPENSE;
         }
 
         db = myDbHelper.getReadableDatabase();
@@ -110,6 +112,9 @@ public class DbController {
                     String s1 = cursor.getString(1);
                     String s2 = cursor.getString(2);
                     ParamsUtil param = new ParamsUtil(id1, s1, s2);
+                    if(id == ParamsUtil.TYPE_EXPENSE || id == ParamsUtil.TYPE_COUNTER){//TODO
+                        param.setExpOrCounter(cursor.getString(3));
+                    }
                     list.add(param);
                 } while (cursor.moveToNext());
             }
@@ -175,8 +180,17 @@ public class DbController {
         private static final String COLUMN_NAME_EXPENSE_ID = "_id";
         private static final String COLUMN_NAME_EXPENSE_DATE = "date";
         private static final String COLUMN_NAME_EXPENSE_AMOUNT = "amount";
-        private static final String CREATE_TABLE_EXPENSE ="create table "+TABLE_NAME_EXPENSE +"("+COLUMN_NAME_EXPENSE_ID +" integer primary key autoincrement, "
-                +COLUMN_NAME_EXPENSE_DATE+" text not null, "+COLUMN_NAME_EXPENSE_AMOUNT +" text);";
+        private static final String COLUMN_NAME_EXPENSE_OR_COUNTER = "exporCounter";
+        private static final String CREATE_TABLE_EXPENSE ="create table "+TABLE_NAME_EXPENSE +
+                "(" +COLUMN_NAME_EXPENSE_ID +" integer primary key autoincrement, "
+                +COLUMN_NAME_EXPENSE_DATE+" text not null, "
+                +COLUMN_NAME_EXPENSE_AMOUNT +" text,"
+                +COLUMN_NAME_EXPENSE_OR_COUNTER +" text not null);";
+
+//TODO
+
+
+
 
         private MysqlLiteHelper(Context context) {
             super(context, DATABASE_NAME, null, DATABASE_VERSION);

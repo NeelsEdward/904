@@ -69,10 +69,15 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
        /* dbController = DbController.getInstace();
         dbController.openDb(this);
-        dbController.insertExpense("Neels Exp", "100Rs");
+        dbController.insertExpense("Neels Exp", "100Rs",String.valueOf(ParamsUtil.TYPE_EXPENSE));
+        dbController.insertExpense("Neels Exp", "100Rs",String.valueOf(ParamsUtil.TYPE_EXPENSE));
+        dbController.insertExpense("Me failed", "1",String.valueOf(ParamsUtil.TYPE_COUNTER));
+        dbController.insertExpense("Me failed", "1",String.valueOf(ParamsUtil.TYPE_COUNTER));
         dbController.insertTodo("Shopping", "Market");
         dbController.insertTodo("Shopping","Market");
         dbController.insertItem("sugar","milk",1);
+        dbController.deleteExpense(2);
+        dbController.editExpense("me pass","yeah","GG",4);
         Utils.copyDBToExternal(this);*/
 
     }
