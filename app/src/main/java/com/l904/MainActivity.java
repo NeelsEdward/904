@@ -28,10 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
     private TextView expense,todo;
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<ParamsUtil> myDataset;
+
+
 
     public MainActivity() {
     }
@@ -46,17 +49,17 @@ public class MainActivity extends AppCompatActivity {
 
         dbController = DbController.getInstace();
         dbController.openDb(this);
-        dbController.insertTodo("Test","COLOR");
-        dbController.insertTodo("Test1","COLOR1");
+        dbController.insertTodo("Test", "COLOR");
+        dbController.insertTodo("Test1", "COLOR1");
         dbController.insertTodo("Test2","COLOR2");
         myDataset = dbController.getAllTodoExpense(ParamsUtil.TYPE_TODO);
 
-        Log.d("neels","mydataset "+myDataset.size());
+        Log.d("neels", "mydataset " + myDataset.size());
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MyTodoAdapter(myDataset,this);
+        mAdapter = new ExpenseAdapter(myDataset,this);
         mRecyclerView.setAdapter(mAdapter);
 
 
@@ -110,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
