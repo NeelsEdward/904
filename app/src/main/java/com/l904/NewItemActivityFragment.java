@@ -58,8 +58,8 @@ public class NewItemActivityFragment extends Fragment implements View.OnClickLis
 
         dbController.openDb(getActivity());
         switch (type){
-            case ParamsUtil.TYPE_EXPENSE:
-                dbController.insertExpense(name,numS);
+            case ParamsUtil.TYPE_EXPENSE://todo
+                dbController.insertExpense(name,numS,String.valueOf(ParamsUtil.TYPE_EXPENSE));
                 Toast.makeText(getActivity(), "Inserted. Total rows=" + dbController.getAllTodoExpense(ParamsUtil.TYPE_EXPENSE).size(), Toast.LENGTH_SHORT).show();
                 getActivity().finish();
         }
