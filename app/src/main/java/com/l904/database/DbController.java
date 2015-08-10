@@ -95,14 +95,14 @@ public class DbController {
         db.update(MysqlLiteHelper.TABLE_NAME_ITEM, cv, MysqlLiteHelper.COLUMN_NAME_ITEM_ID + " = " + id, null);
     }
 
-    public List<ParamsUtil>  getAllTodoExpense(int id){
+    public ArrayList<ParamsUtil>  getAllTodoExpense(int id){
         String str =MysqlLiteHelper.TABLE_NAME_TODO;
         if(id == ParamsUtil.TYPE_EXPENSE || id == ParamsUtil.TYPE_COUNTER){//TODO
             str = MysqlLiteHelper.TABLE_NAME_EXPENSE;
         }
 
         db = myDbHelper.getReadableDatabase();
-            List<ParamsUtil> list  = new ArrayList<ParamsUtil>();
+        ArrayList<ParamsUtil> list  = new ArrayList<ParamsUtil>();
         Cursor cursor =null;
         try {
         cursor  = db.rawQuery("select * from "+str,null);
