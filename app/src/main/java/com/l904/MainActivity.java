@@ -27,12 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout Drawer;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
-    private TextView expense,todo;
+    private TextView expense,todo,counters;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<ParamsUtil> myDataset;
+    private ArrayList<ParamsUtil> myDataTodoLists;
+    private ArrayList<ParamsUtil> myDataTodoExpenses;
+    private ArrayList<ParamsUtil> myDataTodoCounters;
 
 
 
@@ -51,17 +53,26 @@ public class MainActivity extends AppCompatActivity {
         dbController.openDb(this);
         dbController.insertTodo("Test", "COLOR");
         dbController.insertTodo("Test1", "COLOR1");
-        dbController.insertTodo("Test2","COLOR2");
-        myDataset = dbController.getAllTodoExpense(ParamsUtil.TYPE_TODO);
+        dbController.insertTodo("Test2", "COLOR2");
+        myDataTodoLists = dbController.getAllTodoExpense(ParamsUtil.TYPE_TODO);//todo load from worker thread.startup is slow.
+        myDataTodoExpenses=dbController.getAllTodoExpense(ParamsUtil.TYPE_EXPENSE);
+        myDataTodoCounters=dbController.getAllTodoExpense(ParamsUtil.TYPE_COUNTER);
 
-        Log.d("neels", "mydataset " + myDataset.size());
+        Log.d("neels", "mydataset " + myDataTodoLists.size());
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ExpenseAdapter(myDataset,this);
+        mAdapter = new ExpenseAdapter(myDataTodoLists,this);
         mRecyclerView.setAdapter(mAdapter);
 
+
+        expense = (TextView)Drawer.findViewById(R.id.expense);
+        expense.setOnClickListener(mDrawerItemsClickListener);
+        todo = (TextView)Drawer.findViewById(R.id.todo);
+        todo.setOnClickListener(mDrawerItemsClickListener);
+        counters=(TextView) Drawer.findViewById(R.id.counter);
+        counters.setOnClickListener(mDrawerItemsClickListener);
 
 
 
@@ -72,24 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 super.onDrawerOpened(drawerView);
                 // code here will execute once the drawer is opened( As I dont want anything happened whe drawer is
                 // open I am not going to put anything here)
-                expense = (TextView)drawerView.findViewById(R.id.expense);
-                todo = (TextView)drawerView.findViewById(R.id.todo);
-                expense.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Drawer.closeDrawer(Gravity.LEFT);
-                        Toast.makeText(getApplicationContext(), "expense", Toast.LENGTH_SHORT).show();
-
-                    }
-                });
-                todo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Drawer.closeDrawer(Gravity.LEFT);
-                        Toast.makeText(getApplicationContext(), "todo", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
             }
 
             @Override
@@ -98,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
                 // Code here will execute once drawer is closed
             }
 
-
-
         }; // Drawer Toggle Object Made
+
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();
        /* dbController = DbController.getInstace();
@@ -118,7 +110,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    View.OnClickListener mDrawerItemsClickListener= new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(v.getId()==todo.getId()){
+                mAdapter = new ExpenseAdapter(myDataTodoLists,v.getContext());
+                mRecyclerView.setAdapter(mAdapter);
+            }else if(v.getId()==expense.getId()){
+                mAdapter = new MyTodoAdapter(myDataTodoLists,v.getContext());
+                mRecyclerView.setAdapter(mAdapter);
+            }
 
+            Drawer.closeDrawer(Gravity.LEFT);
+            Toast.makeText(v.getContext(), ((TextView)v).getText().toString(),Toast.LENGTH_SHORT).show();
+
+        }
+    };
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
