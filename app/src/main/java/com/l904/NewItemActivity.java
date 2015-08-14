@@ -1,18 +1,16 @@
 package com.l904;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.l904.database.DbController;
 import com.l904.database.ParamsUtil;
 
 public class NewItemActivity extends AppCompatActivity implements NewItemActivityFragment.OnInteractionListener {
-    int type;
     public static final String TAG="NewItemActivity";
+    int type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +19,7 @@ public class NewItemActivity extends AppCompatActivity implements NewItemActivit
         type=getIntent().getIntExtra(ParamsUtil.TYPE,0);
         if(type==0) {
             Log.e(TAG,"this activity needs int extra with name ParamsUtil.TYPE, with value >0");
+            setResult(RESULT_CANCELED);
             finish();
         }
         Log.e(TAG, getIntent().getIntExtra("type", 0) + "");
@@ -34,7 +33,8 @@ public class NewItemActivity extends AppCompatActivity implements NewItemActivit
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_new_item, menu);
+        // getMenuInflater().inflate(R.menu.menu_new_item, menu);
+        //todo have to figure out what to put here
         return true;
     }
 
@@ -46,7 +46,7 @@ public class NewItemActivity extends AppCompatActivity implements NewItemActivit
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_new) {
             return true;
         }
 
@@ -55,6 +55,12 @@ public class NewItemActivity extends AppCompatActivity implements NewItemActivit
     @Override
     public int getType() {
         return type;
+    }
+
+    @Override
+    public void success() {
+        setResult(RESULT_OK);
+        finish();
     }
 
 }

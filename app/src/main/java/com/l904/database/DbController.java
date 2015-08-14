@@ -1,14 +1,13 @@
 package com.l904.database;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Dell Laptop on 8/8/2015.
@@ -102,7 +101,9 @@ public class DbController {
         }
 
         db = myDbHelper.getReadableDatabase();
-        ArrayList<ParamsUtil> list  = new ArrayList<ParamsUtil>();
+        ArrayList<ParamsUtil> listCounters = new ArrayList<ParamsUtil>();
+        ArrayList<ParamsUtil> listExpenses = new ArrayList<ParamsUtil>();
+        ArrayList<ParamsUtil> listTodo = new ArrayList<ParamsUtil>();
         Cursor cursor =null;
         try {
         cursor  = db.rawQuery("select * from "+str,null);
@@ -115,7 +116,12 @@ public class DbController {
                     if(id == ParamsUtil.TYPE_EXPENSE || id == ParamsUtil.TYPE_COUNTER){//TODO
                         param.setExpOrCounter(cursor.getString(3));
                     }
-                    list.add(param);
+                    if (id == ParamsUtil.TYPE_EXPENSE && param.getExpOrCounter().equals(ParamsUtil.TYPE_EXPENSE))
+                        listExpenses.add(param);
+                    else if (id == ParamsUtil.TYPE_COUNTER && param.getExpOrCounter().equals(ParamsUtil.TYPE_COUNTER))
+                        listCounters.add(param);
+                    else
+                        listTodo.add(param);
                 } while (cursor.moveToNext());
             }
         }catch (Exception e){
@@ -125,8 +131,15 @@ public class DbController {
             cursor.close();
             db.close();
         }
-        return list;
+
+        if (id == ParamsUtil.TYPE_EXPENSE)
+            return listExpenses;
+        if (id == ParamsUtil.TYPE_COUNTER)
+            return listCounters;
+        else
+            return listTodo;
     }
+
     public List<ParamsUtil>  getAllItems(int id){
         db = myDbHelper.getReadableDatabase();
         List<ParamsUtil> list  = new ArrayList<ParamsUtil>();

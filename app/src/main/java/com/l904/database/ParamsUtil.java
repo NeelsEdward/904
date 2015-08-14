@@ -8,6 +8,7 @@ public class ParamsUtil {
     public static final int TYPE_COUNTER=2;
     public static final int TYPE_TODO=3;
     public static final int TYPE_TODOITEM=4;
+    public static final String[] TYPES = new String[]{"", "Expense", "Counter", "Todo", "Todo Item"};
 
 
 
@@ -16,18 +17,18 @@ public class ParamsUtil {
     private String expOrCounter;
 
 
+    public ParamsUtil(int id, String ndd, String cam) {
+        this.id = id;
+        this.name_date_des = ndd;
+        this.color_amount_target = cam;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public  ParamsUtil(int id,String ndd,String cam){
-        this.id = id;
-        this.name_date_des = ndd;
-        this.color_amount_target = cam;
     }
 
     public String getName_date_des() {
