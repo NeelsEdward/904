@@ -75,7 +75,11 @@ public class NewItemActivityFragment extends Fragment implements View.OnClickLis
         if(name.equals("")) return;
 
         String numS = numEditText.getText().toString();
-        Integer num = numS.equals("")?0:Integer.parseInt(numS);
+        Integer num = 0;
+        try {
+            num = Integer.parseInt(numS);
+        } catch (Exception ex) {
+        }
         numEditText.setText("");
 
         DbController dbController= DbController.getInstace();
@@ -83,13 +87,13 @@ public class NewItemActivityFragment extends Fragment implements View.OnClickLis
         dbController.openDb(getActivity());
         switch (type){
             case ParamsUtil.TYPE_EXPENSE://todo
-                dbController.insertExpense(name, numS, String.valueOf(ParamsUtil.TYPE_EXPENSE));
+                dbController.insertExpense(name, String.valueOf(num), String.valueOf(ParamsUtil.TYPE_EXPENSE));
                 //Toast.makeText(getActivity(), "Inserted. Total rows=" + dbController.getAllTodoExpense(ParamsUtil.TYPE_EXPENSE).size(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Inserted. Total rows=" + dbController.getAllTodoExpense(ParamsUtil.TYPE_EXPENSE).size());
                 listener.success();
                 break;
             case ParamsUtil.TYPE_COUNTER://todo
-                dbController.insertExpense(name, numS, String.valueOf(ParamsUtil.TYPE_COUNTER));
+                dbController.insertExpense(name, String.valueOf(num), String.valueOf(ParamsUtil.TYPE_COUNTER));
                 //Toast.makeText(getActivity(), "Inserted. Total rows=" + dbController.getAllTodoExpense(ParamsUtil.TYPE_EXPENSE).size(), Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "Inserted. Total rows=" + dbController.getAllTodoExpense(ParamsUtil.TYPE_COUNTER).size());
                 listener.success();
