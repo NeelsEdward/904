@@ -43,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             if (v.getId() == todo.getId()) {
                 type = ParamsUtil.TYPE_TODO;
-                mAdapter = new ExpenseAdapter(myDataTodoExpenses, v.getContext());
+                mAdapter = new MyTodoAdapter(myDataTodoLists, v.getContext());
                 mRecyclerView.setAdapter(mAdapter);
             } else if (v.getId() == expense.getId()) {
                 type = ParamsUtil.TYPE_EXPENSE;
-                mAdapter = new MyTodoAdapter(myDataTodoLists, v.getContext());
+                mAdapter = new ExpenseAdapter(myDataTodoExpenses, v.getContext());
                 mRecyclerView.setAdapter(mAdapter);
             } else if (v.getId() == counters.getId()) {
                 type = ParamsUtil.TYPE_COUNTER;
