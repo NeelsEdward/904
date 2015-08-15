@@ -1,6 +1,7 @@
 package com.l904.database;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.l904.R;
 import java.util.List;
 
 public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.VH> {
+    private static final String TAG = "CounterAdapter";
     List<ParamsUtil> items;
 
     public CounterAdapter(List<ParamsUtil> items) {
@@ -47,10 +49,29 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.VH> {
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    try {
                     int c = Integer.parseInt(p.color_amount_target) + 1;
                     DbController.getInstace().editExpense(p.getName_date_des(), String.valueOf(c), String.valueOf(ParamsUtil.TYPE_COUNTER), p.id);
                     p.setColor_amount_target(String.valueOf(c));
                     notifyItemChanged(pos);
+                    } catch (Exception ex) {
+                        Log.e(TAG, ex.getMessage() + "");
+                    }
+                }
+            });
+
+            textView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    try {
+                        int c = Integer.parseInt(p.color_amount_target) - 1;
+                        DbController.getInstace().editExpense(p.getName_date_des(), String.valueOf(c), String.valueOf(ParamsUtil.TYPE_COUNTER), p.id);
+                        p.setColor_amount_target(String.valueOf(c));
+                        notifyItemChanged(pos);
+                    } catch (Exception ex) {
+                        Log.e(TAG, ex.getMessage() + "");
+                    }
+                    return true;
                 }
             });
         }
