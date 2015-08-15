@@ -116,9 +116,9 @@ public class DbController {
                     if(id == ParamsUtil.TYPE_EXPENSE || id == ParamsUtil.TYPE_COUNTER){//TODO
                         param.setExpOrCounter(cursor.getString(3));
                     }
-                    if (id == ParamsUtil.TYPE_EXPENSE && param.getExpOrCounter().equals(ParamsUtil.TYPE_EXPENSE))
+                    if (id == ParamsUtil.TYPE_EXPENSE && param.getExpOrCounter().equals(ParamsUtil.TYPE_EXPENSE + ""))
                         listExpenses.add(param);
-                    else if (id == ParamsUtil.TYPE_COUNTER && param.getExpOrCounter().equals(ParamsUtil.TYPE_COUNTER))
+                    else if (id == ParamsUtil.TYPE_COUNTER && param.getExpOrCounter().equals(ParamsUtil.TYPE_COUNTER + ""))
                         listCounters.add(param);
                     else
                         listTodo.add(param);
