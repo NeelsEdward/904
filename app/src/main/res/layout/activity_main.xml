@@ -1,11 +1,15 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:elevation="7dp"
-    android:id="@+id/DrawerLayout">
+    android:elevation="7dp">
 
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -28,43 +32,44 @@
             android:scrollbars="vertical" />
 
      </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:background="@android:color/white"
         android:layout_gravity="left"
+        android:background="@android:color/white"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/todo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="48dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="15dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="20dp"
             android:text="TODO List"
-            android:padding="20dp"
-            android:background="?attr/selectableItemBackground"
-            android:id="@+id/todo"/>
+            android:textSize="15dp" />
         <TextView
+            android:id="@+id/expense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="?attr/selectableItemBackground"
+            android:padding="20dp"
             android:text="Expense"
-            android:textSize="15dp"
-            android:padding="20dp"
-            android:background="?attr/selectableItemBackground"
 
-            android:id="@+id/expense"/>
+            android:textSize="15dp" />
         <TextView
+            android:id="@+id/counter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
             android:layout_gravity="center"
-            android:text="Counter"
-            android:textSize="15dp"
             android:background="?attr/selectableItemBackground"
+            android:padding="20dp"
+            android:text="Counter"
 
-            android:id="@+id/counter"/>
+            android:textSize="15dp" />
 
 
     </LinearLayout>

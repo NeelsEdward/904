@@ -1,4 +1,4 @@
-package com.l904.database;
+package com.l904;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.l904.R;
+import com.l904.database.DbController;
+import com.l904.database.ParamsUtil;
 
 import java.util.List;
 
@@ -28,9 +29,8 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.VH> {
     @Override
     public void onBindViewHolder(VH holder, int position) {
         ParamsUtil p = items.get(position);
-        holder.textView.setText(p.name_date_des + "(" + p.getColor_amount_target() + ")");
+        holder.textView.setText(p.getName_date_des() + "(" + p.getColor_amount_target() + ")");
         holder.p = p;
-        holder.pos = position;
     }
 
     @Override
@@ -41,7 +41,6 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.VH> {
     public class VH extends RecyclerView.ViewHolder {
         TextView textView;
         ParamsUtil p;
-        int pos;
 
         public VH(View itemView) {
             super(itemView);
@@ -50,10 +49,10 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.VH> {
                 @Override
                 public void onClick(View v) {
                     try {
-                    int c = Integer.parseInt(p.color_amount_target) + 1;
-                    DbController.getInstace().editExpense(p.getName_date_des(), String.valueOf(c), String.valueOf(ParamsUtil.TYPE_COUNTER), p.id);
+                        int c = Integer.parseInt(p.getColor_amount_target()) + 1;
+                        DbController.getInstace().editExpense(p.getName_date_des(), String.valueOf(c), String.valueOf(ParamsUtil.TYPE_COUNTER), p.getId());
                     p.setColor_amount_target(String.valueOf(c));
-                    notifyItemChanged(pos);
+                        notifyItemChanged(getAdapterPosition());
                     } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage() + "");
                     }
@@ -64,10 +63,10 @@ public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.VH> {
                 @Override
                 public boolean onLongClick(View v) {
                     try {
-                        int c = Integer.parseInt(p.color_amount_target) - 1;
-                        DbController.getInstace().editExpense(p.getName_date_des(), String.valueOf(c), String.valueOf(ParamsUtil.TYPE_COUNTER), p.id);
+                        int c = Integer.parseInt(p.getColor_amount_target()) - 1;
+                        DbController.getInstace().editExpense(p.getName_date_des(), String.valueOf(c), String.valueOf(ParamsUtil.TYPE_COUNTER), p.getId());
                         p.setColor_amount_target(String.valueOf(c));
-                        notifyItemChanged(pos);
+                        notifyItemChanged(getAdapterPosition());
                     } catch (Exception ex) {
                         Log.e(TAG, ex.getMessage() + "");
                     }
