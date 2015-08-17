@@ -2,12 +2,16 @@ package com.l904;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -16,7 +20,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.l904.database.CounterAdapter;
 import com.l904.database.DbController;
 import com.l904.database.ParamsUtil;
 
@@ -35,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private ItemTouchHelper itemTouchHelper;
     private ArrayList<ParamsUtil> myDataTodoLists;
     private ArrayList<ParamsUtil> myDataTodoExpenses;
     private ArrayList<ParamsUtil> myDataTodoCounters;
@@ -60,11 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
+    private Handler handler;
+    private CoordinatorLayout coordinatorLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         Drawer = (DrawerLayout) findViewById(R.id.DrawerLayout);
@@ -112,6 +120,43 @@ public class MainActivity extends AppCompatActivity {
         Drawer.setDrawerListener(mDrawerToggle); // Drawer Listener set to the Drawer toggle
         mDrawerToggle.syncState();
         todo.performClick();
+        itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+                if (type == ParamsUtil.TYPE_COUNTER) {
+                    final int pos = viewHolder.getAdapterPosition();
+                    final ParamsUtil pu = myDataTodoCounters.get(pos);
+                    myDataTodoCounters.remove(pos);
+                    mAdapter.notifyItemRemoved(pos);
+
+                    final Runnable r1 = new Runnable() {
+                        @Override
+                        public void run() {
+                            dbController.deleteExpense(pu.getId());//todo do in worker thread
+                        }
+                    };
+                    handler.postDelayed(r1, 2000);
+                    View.OnClickListener onClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            handler.removeCallbacks(r1);
+                            myDataTodoCounters.add(pos, pu);
+                            mAdapter.notifyItemInserted(pos);
+                        }
+                    };
+                    Snackbar snk = Snackbar.make(coordinatorLayout, "Item deleted", Snackbar.LENGTH_SHORT).setAction("Undo", onClickListener);
+                    snk.show();
+
+                }
+            }
+        });
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+        handler = new Handler();
         //testDB();
     }
 
